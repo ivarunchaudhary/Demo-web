@@ -48,7 +48,7 @@ export function Search({ assets }: { assets: AssetSummary[] }) {
       <label htmlFor="asset-search" className="sr-only">
         Search a Stock Token
       </label>
-      <div className="flex items-center gap-4 border-b border-ivory-50 pb-3 focus-within:border-ivory">
+      <div className="flex items-center gap-4 border-b border-ivory-40 pb-3 transition-colors focus-within:border-ivory">
         <svg aria-hidden width="22" height="22" viewBox="0 0 24 24" fill="none" className="shrink-0 text-ivory-50">
           <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="1.6" />
           <path d="M16.5 16.5L21 21" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
@@ -73,9 +73,9 @@ export function Search({ assets }: { assets: AssetSummary[] }) {
           aria-expanded={open && matches.length > 0}
           aria-controls={listId}
           aria-autocomplete="list"
-          className="w-full bg-transparent text-[24px] leading-none text-ivory placeholder:text-ivory-50 focus:outline-none md:text-[32px]"
+          className="w-full bg-transparent text-[24px] leading-none tracking-[-0.28px] text-ivory placeholder:text-ivory-50 focus:outline-none md:text-[28px]"
         />
-        <kbd className="hidden rounded border border-ivory-16 px-2 py-0.5 text-[12px] text-ivory-50 sm:block">/</kbd>
+        <kbd className="hidden rounded border border-hairline px-2 py-0.5 text-[12px] text-ivory-50 sm:block">/</kbd>
       </div>
 
       {open && query.trim() && (
@@ -85,7 +85,7 @@ export function Search({ assets }: { assets: AssetSummary[] }) {
           className="card absolute left-0 right-0 top-full z-10 mt-3 overflow-hidden bg-charcoal-2"
         >
           {matches.length === 0 && (
-            <li className="px-5 py-4 text-[15px] text-ivory-75">
+            <li className="body-sm px-5 py-4 text-ivory-75">
               No Stock Token tracked for “{query.trim().toUpperCase()}”. Try a ticker like AAPL or TSLA.
             </li>
           )}
@@ -96,12 +96,12 @@ export function Search({ assets }: { assets: AssetSummary[] }) {
               aria-selected={i === active}
               onMouseDown={() => go(a.asset)}
               onMouseEnter={() => setActive(i)}
-              className={`flex cursor-pointer items-center gap-4 px-5 py-3.5 ${i === active ? "bg-ivory-08" : ""}`}
+              className={`flex cursor-pointer items-center gap-4 px-5 py-3.5 ${i === active ? "bg-ivory-05" : ""}`}
             >
               <StatusDot tone={a.overall_status} />
-              <span className="w-[72px] font-semibold">{a.asset}</span>
+              <span className="w-[72px] font-medium tracking-[0.45px]">{a.asset}</span>
               <span className="flex-1 truncate text-ivory-75">{a.name}</span>
-              <span className="text-[13px] text-ivory-50">{a.overall_status.charAt(0) + a.overall_status.slice(1).toLowerCase()}</span>
+              <span className="body-sm text-ivory-50">{a.overall_status.charAt(0) + a.overall_status.slice(1).toLowerCase()}</span>
             </li>
           ))}
         </ul>
