@@ -25,40 +25,40 @@ export function SiteFooter() {
       </Parallax>
 
       <div className="wrap pb-12 pt-20">
-        <div className="grid gap-10 border-t border-ivory pt-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+        <div className="grid gap-10 border-t border-ink pt-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
             <Glyph size={48} className="mb-6" />
             <Wordmark />
-            <p className="body-md mt-4 max-w-[36ch] text-ivory">
+            <p className="body-md mt-4 max-w-[36ch] text-ink">
               Live operational status for Stock Tokens. Status infrastructure, not a trading dashboard.
             </p>
           </div>
           <div className="body-sm">
             <p className="display-italic text-[18px] tracking-[-0.6px]">Product —</p>
-            <ul className="mt-4 space-y-3 text-ivory">
-              <li><Link href="/#tracked" className="transition-colors hover:text-ivory-75">Tracked tokens</Link></li>
-              <li><Link href="/#verification" className="transition-colors hover:text-ivory-75">What a status means</Link></li>
-              <li><Link href="/#use-cases" className="transition-colors hover:text-ivory-75">Who asks</Link></li>
+            <ul className="mt-4 space-y-3 text-ink">
+              <li><Link href="/#tracked" className="transition-colors hover:text-ink-75">Tracked tokens</Link></li>
+              <li><Link href="/#verification" className="transition-colors hover:text-ink-75">What a status means</Link></li>
+              <li><Link href="/#use-cases" className="transition-colors hover:text-ink-75">Who asks</Link></li>
             </ul>
           </div>
           <div className="body-sm">
             <p className="display-italic text-[18px] tracking-[-0.6px]">Developers —</p>
-            <ul className="mt-4 space-y-3 text-ivory">
-              <li><Link href="/#api" className="transition-colors hover:text-ivory-75">API reference</Link></li>
-              <li><Link href="/api/assets" className="transition-colors hover:text-ivory-75">All tokens, JSON</Link></li>
-              <li><Link href="/api/assets/AAPL/status" className="transition-colors hover:text-ivory-75">Example response</Link></li>
+            <ul className="mt-4 space-y-3 text-ink">
+              <li><Link href="/#api" className="transition-colors hover:text-ink-75">API reference</Link></li>
+              <li><Link href="/api/assets" className="transition-colors hover:text-ink-75">All tokens, JSON</Link></li>
+              <li><Link href="/api/assets/AAPL/status" className="transition-colors hover:text-ink-75">Example response</Link></li>
             </ul>
           </div>
           <div className="body-sm">
             <p className="display-italic text-[18px] tracking-[-0.6px]">Scope —</p>
-            <ul className="mt-4 space-y-3 text-ivory">
+            <ul className="mt-4 space-y-3 text-ink">
               <li>Robinhood Chain</li>
               <li>Stock Tokens only</li>
               <li>Operational status, never investment advice</li>
             </ul>
           </div>
         </div>
-        <p className="mt-12 text-[12px] leading-[1.4] text-ivory">
+        <p className="mt-12 text-[12px] leading-[1.4] text-ink">
           {new Date().getFullYear()} AssetStatus. Statuses describe operational state and are not a recommendation to buy, sell or hold any asset.
         </p>
       </div>

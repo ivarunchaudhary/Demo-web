@@ -13,12 +13,12 @@ export function Glyph({ className = "", size = 84 }: { className?: string; size?
   return (
     <svg
       aria-hidden
-      className={className}
+      className={`text-ink ${className}`}
       width={size}
       height={size * 1.28}
       viewBox="0 0 84 108"
       fill="none"
-      stroke="#e3d27a"
+      stroke="currentColor"
       strokeWidth="1.6"
       strokeLinecap="round"
     >

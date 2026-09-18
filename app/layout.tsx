@@ -46,7 +46,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="en" className={`${sans.variable} ${serif.variable} ${mono.variable} h-full`}>
       <body className="flex min-h-full flex-col overflow-x-hidden">
         <noscript>
-          <style>{`.reveal,[data-hero-item],[data-hero-art]{opacity:1!important;transform:none!important}`}</style>
+          <style>{`.reveal,[data-hero-item],[data-hero-art],[data-split]{opacity:1!important;transform:none!important}.petal{display:none}`}</style>
         </noscript>
         <MotionRoot />
         <SiteHeader />

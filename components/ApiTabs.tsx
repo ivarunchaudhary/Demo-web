@@ -74,10 +74,10 @@ export function ApiTabs({ examples }: { examples: ApiExample[] }) {
           <h3 data-swap className="display text-[32px] text-balance md:text-[40px] xl:text-[48px]">
             {ex.title}
           </h3>
-          <p data-swap className="body-sm mt-5 max-w-[42ch] text-ivory-80">
+          <p data-swap className="body-sm mt-5 max-w-[42ch] text-ink-80">
             {ex.blurb}
           </p>
-          <p data-swap className="mt-6 font-mono text-[13px] text-ivory-60">
+          <p data-swap className="mt-6 font-mono text-[13px] text-ink-60">
             GET {ex.path}
           </p>
           <Link data-swap href={`/api${ex.path}`} className="btn btn-ghost mt-8">

@@ -29,7 +29,7 @@ export function StatusGrid({ items }: { items: StatusExplainer[] }) {
         <EcoRow key={it.status} tone={`tone-${it.status}`} flip={i % 2 === 1}>
           <div className="eco-tile">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={i % 2 === 0 ? "/art/botanical-right.svg" : "/art/botanical-left.svg"} alt="" loading="lazy" style={i % 2 === 1 ? { top: "-70%", right: "-25%", height: "230%" } : undefined} />
+            <img data-drift="28" src={i % 2 === 0 ? "/art/botanical-right.svg" : "/art/botanical-left.svg"} alt="" loading="lazy" style={i % 2 === 1 ? { top: "-70%", right: "-25%", height: "230%" } : undefined} />
             <StatusDot tone={it.status} live={it.status !== "UNKNOWN"} className="eco-tile-dot dot-lg" />
             <span className="eco-tile-word">{humanise(it.status)}</span>
             <div className="eco-reveal" aria-hidden>
@@ -70,7 +70,7 @@ export function StatusGrid({ items }: { items: StatusExplainer[] }) {
                 See {it.example.asset} — currently {humanise(it.status).toLowerCase()}
               </Link>
             ) : (
-              <span className="text-[14px] text-ivory-60">No tracked token is in this state right now.</span>
+              <span className="eco-panel-muted text-[14px]">No tracked token is in this state right now.</span>
             )}
           </div>
         </EcoRow>

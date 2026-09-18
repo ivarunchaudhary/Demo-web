@@ -11,7 +11,7 @@ export function Marquee({ assets }: { assets: AssetSummary[] }) {
   const items = [...assets, ...assets];
   return (
     <div className="marquee-mask mx-auto w-full max-w-[1920px] overflow-hidden">
-      <div className="marquee-track flex w-max items-center gap-16 motion-reduce:animate-none">
+      <div data-marquee className="marquee-track flex w-max items-center gap-16 motion-reduce:animate-none">
         {items.map((a, i) => (
           <Link
             key={`${a.asset}-${i}`}
@@ -22,7 +22,7 @@ export function Marquee({ assets }: { assets: AssetSummary[] }) {
           >
             <StatusDot tone={a.overall_status} />
             <span className="display text-[34px] leading-none md:text-[44px]">{a.asset}</span>
-            <span className="label leading-none text-ivory-50">
+            <span className="label leading-none text-ink-50">
               {humanise(a.overall_status)}
             </span>
           </Link>

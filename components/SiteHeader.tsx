@@ -41,7 +41,7 @@ export function SiteHeader() {
     >
       <div
         aria-hidden
-        className={`pointer-events-none absolute inset-x-0 top-0 h-[88px] border-b border-hairline bg-charcoal/85 backdrop-blur-[12px] transition-opacity duration-200 ${scrolled ? "opacity-100" : "opacity-0"}`}
+        className={`pointer-events-none absolute inset-x-0 top-0 h-[88px] border-b border-hairline bg-paper/85 backdrop-blur-[12px] transition-opacity duration-200 ${scrolled ? "opacity-100" : "opacity-0"}`}
       />
       <nav className="wrap relative flex h-[88px] items-center justify-between">
         <Wordmark />
