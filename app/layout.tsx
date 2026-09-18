@@ -1,19 +1,35 @@
 import type { Metadata } from "next";
-import { Instrument_Sans, Instrument_Serif } from "next/font/google";
-import Link from "next/link";
+import { Inter, Newsreader, Geist_Mono } from "next/font/google";
+import { SiteHeader } from "@/components/SiteHeader";
+import { SiteFooter } from "@/components/SiteFooter";
+import { MotionRoot } from "@/components/motion/MotionRoot";
 import "./globals.css";
 
-const sans = Instrument_Sans({
-  variable: "--font-instrument-sans",
+/*
+ * grove.finance is set in Söhne, GT Super Text and Söhne Mono, all licensed.
+ * These open faces match their proportions: Inter for the neutral grotesk,
+ * Newsreader (optical-size axis) for the high-contrast Times-lineage serif,
+ * Geist Mono for code. globals.css lists the licensed names ahead of these,
+ * so dropping the real files in (next/font/local) is a one-line swap.
+ */
+const sans = Inter({
+  variable: "--font-sans-face",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
-const serif = Instrument_Serif({
-  variable: "--font-instrument-serif",
+const serif = Newsreader({
+  variable: "--font-serif-face",
   subsets: ["latin"],
-  weight: "400",
   style: ["normal", "italic"],
+  axes: ["opsz"],
+  display: "swap",
+});
+
+const mono = Geist_Mono({
+  variable: "--font-mono-face",
+  subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -25,64 +41,17 @@ export const metadata: Metadata = {
     "Know the state of your Stock Token before you use it. One standardized status layer built from verifiable onchain and authoritative offchain information.",
 };
 
-function Wordmark() {
-  return (
-    <Link href="/" className="display text-[26px] tracking-[-0.02em] text-ivory" aria-label="AssetStatus home">
-      AssetStatus
-    </Link>
-  );
-}
-
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${sans.variable} ${serif.variable} h-full`}>
-      <body className="min-h-full flex flex-col">
-        <header className="mx-auto w-full max-w-[1336px] px-6 md:px-10">
-          <nav className="flex h-[88px] items-center justify-between">
-            <Wordmark />
-            <div className="flex items-center gap-8">
-              <Link href="/#tracked" className="hidden text-[15px] font-medium text-ivory-75 hover:text-ivory sm:block">
-                Tracked tokens
-              </Link>
-              <Link href="/#api" className="hidden text-[15px] font-medium text-ivory-75 hover:text-ivory sm:block">
-                API
-              </Link>
-              <Link href="/api/assets" className="btn btn-secondary">
-                Query API
-              </Link>
-            </div>
-          </nav>
-        </header>
-        <main className="mx-auto w-full max-w-[1336px] flex-1 px-6 md:px-10">{children}</main>
-        <footer className="mx-auto w-full max-w-[1336px] px-6 pb-12 pt-20 md:px-10">
-          <div className="hairline grid gap-10 border-t pt-10 md:grid-cols-[1.4fr_1fr_1fr]">
-            <div>
-              <Wordmark />
-              <p className="mt-4 max-w-[36ch] text-[15px] text-ivory-75">
-                Live operational status for Stock Tokens. Status infrastructure, not a trading dashboard.
-              </p>
-            </div>
-            <div className="text-[15px]">
-              <p className="display text-[22px] italic text-ivory">Product —</p>
-              <ul className="mt-3 space-y-2 text-ivory-75">
-                <li><Link href="/#tracked" className="hover:text-ivory">Tracked tokens</Link></li>
-                <li><Link href="/#api" className="hover:text-ivory">API reference</Link></li>
-                <li><Link href="/#verification" className="hover:text-ivory">How statuses are verified</Link></li>
-              </ul>
-            </div>
-            <div className="text-[15px]">
-              <p className="display text-[22px] italic text-ivory">Scope —</p>
-              <ul className="mt-3 space-y-2 text-ivory-75">
-                <li>Robinhood Chain</li>
-                <li>Stock Tokens only</li>
-                <li>Operational status, never investment advice</li>
-              </ul>
-            </div>
-          </div>
-          <p className="mt-10 text-[13px] text-ivory-50">
-            {new Date().getFullYear()} AssetStatus. Statuses describe operational state and are not a recommendation to buy, sell or hold any asset.
-          </p>
-        </footer>
+    <html lang="en" className={`${sans.variable} ${serif.variable} ${mono.variable} h-full`}>
+      <body className="flex min-h-full flex-col overflow-x-hidden">
+        <noscript>
+          <style>{`.reveal,[data-hero-item],[data-hero-art]{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
+        <MotionRoot />
+        <SiteHeader />
+        <main className="relative z-10 flex flex-1 flex-col pt-[88px]">{children}</main>
+        <SiteFooter />
       </body>
     </html>
   );
