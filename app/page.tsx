@@ -1,16 +1,13 @@
 import Link from "next/link";
-import { Search } from "@/components/Search";
 import { StatusDot } from "@/components/StatusDot";
-import { RelativeTime } from "@/components/RelativeTime";
 import { Botanical } from "@/components/Botanical";
-import { Marquee } from "@/components/Marquee";
+import { ContractAddress } from "@/components/ContractAddress";
 import { StatusGrid, type StatusExplainer } from "@/components/StatusGrid";
-import { ApiTabs, type ApiExample } from "@/components/ApiTabs";
 import { Reveal } from "@/components/motion/Reveal";
 import { Glyph } from "@/components/Wordmark";
-import { getAsset, listAssets, PROVIDER_MODE } from "@/lib/provider";
+import { getAsset, listAssets } from "@/lib/provider";
 import { humanise, OVERALL_MEANING } from "@/lib/format";
-import type { AssetStatusResponse, AssetSummary, OverallStatus } from "@/lib/types";
+import type { AssetSummary, OverallStatus } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
@@ -37,7 +34,7 @@ const USE_CASES = [
     who: "Wallets",
     title: "Warn before a transfer, not after it fails",
     points: ["Show the overall status next to the balance", "Hold a send while the token is paused", "Explain a restriction with the issuer's own reason"],
-    href: "/#tracked",
+    href: "/app#tracked",
     cta: "Browse tracked tokens",
   },
   {
@@ -45,7 +42,7 @@ const USE_CASES = [
     who: "Protocols",
     title: "Gate collateral and settlement on verified state",
     points: ["Refuse a deposit while trading is halted", "Reject a stale reference price automatically", "Every reason carries its source and timestamp"],
-    href: "/#api",
+    href: "/app#api",
     cta: "See the status API",
   },
   {
@@ -58,81 +55,13 @@ const USE_CASES = [
   },
 ];
 
-function examplesFor(a: AssetStatusResponse): ApiExample[] {
-  const j = (v: unknown) => JSON.stringify(v, null, 2);
-  const base = `/assets/${a.asset}`;
-  return [
-    {
-      id: "status",
-      label: "Status",
-      title: `The overall state of ${a.asset} in one call`,
-      blurb: "The compact summary a wallet or protocol checks before every interaction: the verdict, the reasons behind it and each category's state.",
-      path: `${base}/status`,
-      body: j({
-        asset: a.asset,
-        token: a.token,
-        chain: a.chain,
-        overall_status: a.overall_status,
-        reasons: a.reasons,
-        token_status: a.token_status,
-        transfer_status: a.transfer_status,
-        trading_status: a.trading_status,
-        oracle_status: a.oracle_status,
-        underlying_status: a.underlying_status,
-        corporate_action: a.corporate_action ? a.corporate_action.type : null,
-        last_updated: a.last_updated,
-      }),
-    },
-    {
-      id: "oracle",
-      label: "Oracle",
-      title: "Is the reference price fresh enough to trust?",
-      blurb: "Oracle health with its heartbeat, the source it was read from and when it was last observed.",
-      path: `${base}/oracle`,
-      body: j({ asset: a.asset, oracle_status: a.oracle_status, signal: a.signals.oracle }),
-    },
-    {
-      id: "transfers",
-      label: "Transfers",
-      title: "Can this token move right now?",
-      blurb: "Token pause state read from the contract, plus any transfer restriction the issuer has published.",
-      path: `${base}/transfers`,
-      body: j({ asset: a.asset, token_status: a.token_status, transfer_status: a.transfer_status, signals: { token: a.signals.token, transfers: a.signals.transfers } }),
-    },
-    {
-      id: "trading",
-      label: "Trading",
-      title: "Is the market open for the underlying?",
-      blurb: "Trading halts, suspensions and the listing state of the underlying security.",
-      path: `${base}/trading`,
-      body: j({ asset: a.asset, trading_status: a.trading_status, underlying_status: a.underlying_status, signals: { trading: a.signals.trading, underlying: a.signals.underlying } }),
-    },
-    {
-      id: "corporate-actions",
-      label: "Corporate",
-      title: "What is about to change for holders?",
-      blurb: "Dividends, splits, mergers and suspensions with their effective dates, before they settle.",
-      path: `${base}/corporate-actions`,
-      body: j({ asset: a.asset, corporate_actions: a.corporate_action ? [a.corporate_action] : [] }),
-    },
-    {
-      id: "sources",
-      label: "Sources",
-      title: "Where every reading came from",
-      blurb: "The contracts, registries and publications behind each status, so anyone can verify them independently.",
-      path: `${base}/sources`,
-      body: j({ asset: a.asset, sources: a.sources }),
-    },
-    {
-      id: "full",
-      label: "Full record",
-      title: "Everything AssetStatus knows about the token",
-      blurb: "The complete record: every signal, its verification state, its source and its observation time.",
-      path: base,
-      body: j(a),
-    },
-  ];
-}
+const ENDPOINTS = [
+  { path: "/api/assets", what: "Every tracked token with its overall status" },
+  { path: "/api/assets/{TICKER}/status", what: "The verdict, its reasons and each category's state" },
+  { path: "/api/assets/{TICKER}/transfers", what: "Pause state and any published transfer restriction" },
+  { path: "/api/assets/{TICKER}/oracle", what: "Reference price health and heartbeat" },
+  { path: "/api/assets/{TICKER}/sources", what: "Where every reading came from" },
+];
 
 export default async function Home() {
   const assets = await listAssets();
@@ -140,7 +69,6 @@ export default async function Home() {
     (acc, a) => ({ ...acc, [a.overall_status]: acc[a.overall_status] + 1 }),
     { ACTIVE: 0, WARNING: 0, BLOCKED: 0, UNKNOWN: 0 },
   );
-  const sample = (await getAsset("MSFT")) ?? (await getAsset(assets[0]?.asset ?? ""));
   const usable = counts.ACTIVE + counts.WARNING;
   const exampleFor = (s: OverallStatus): AssetSummary | undefined => assets.find((a) => a.overall_status === s);
   const explainers: StatusExplainer[] = await Promise.all(
@@ -171,7 +99,7 @@ export default async function Home() {
 
   return (
     <>
-      {/* Hero: copy on the left of a hairline, stat box below, mist card and glyph on the right. */}
+      {/* Hero: copy on the left of a hairline, contract address under the sub-heading, CTAs on the right. */}
       <section data-hero data-parallax-scope className="relative overflow-hidden bg-paper">
         <Botanical />
         <div className="wrap relative z-10">
@@ -190,8 +118,18 @@ export default async function Home() {
                 AssetStatus is the live operational-status layer for tokenized stocks on Robinhood Chain. One answer,
                 built from verifiable onchain state and authoritative issuer information.
               </p>
-              <div data-hero-item className="mt-10">
-                <Search assets={assets} />
+
+              <div data-hero-item className="mt-8 max-w-[560px]">
+                <ContractAddress />
+              </div>
+
+              <div data-hero-item className="mt-8 flex flex-wrap items-center gap-4">
+                <Link href="/app" className="btn btn-primary">
+                  Check a token
+                </Link>
+                <Link href="/#api" className="btn btn-ghost">
+                  Read the API
+                </Link>
               </div>
 
               <div data-hero-item className="stat-box mt-14 max-w-[400px] text-center">
@@ -209,17 +147,17 @@ export default async function Home() {
             <div className="flex flex-col justify-end gap-6 lg:pl-10">
               <div data-hero-item className="grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-4 lg:grid-cols-2">
                 {STATUSES.map((s) => (
-                  <Link key={s} href={`/assets/${exampleFor(s)?.asset ?? assets[0]?.asset ?? ""}`} className="row-link group flex items-center gap-3 rounded-[4px] border border-ink-16 bg-paper/70 px-4 py-3 backdrop-blur-[6px]">
+                  <Link key={s} href="/app" className="row-link group flex items-center gap-3 rounded-[4px] border border-ink-16 bg-paper/70 px-4 py-3 backdrop-blur-[6px]">
                     <StatusDot tone={s} />
                     <span className="display text-[28px] leading-none">{counts[s]}</span>
                     <span className="body-sm text-ink-75">{humanise(s)}</span>
                   </Link>
                 ))}
               </div>
-              <Link data-hero-item href="/api/assets" className="cta-mist">
+              <Link data-hero-item href="/app" className="cta-mist">
                 <span>
-                  <span className="block font-serif text-[24px] italic leading-[1.1] tracking-[-0.02em] md:text-[28px]">Ask the API first</span>
-                  <span className="mt-2 block text-[12px] font-bold uppercase tracking-[2px]">Every status, as JSON</span>
+                  <span className="block font-serif text-[24px] italic leading-[1.1] tracking-[-0.02em] md:text-[28px]">Open the app</span>
+                  <span className="mt-2 block text-[12px] font-bold uppercase tracking-[2px]">Search any tracked token</span>
                 </span>
                 <span className="arrow">
                   <svg aria-hidden width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
@@ -228,29 +166,15 @@ export default async function Home() {
                 </span>
               </Link>
               <p data-hero-item className="body-sm text-ink-50">
-                {PROVIDER_MODE === "live"
-                  ? "Token pause state is re-read from Robinhood Chain on every request."
-                  : "Reading from the recorded snapshot. Set a Robinhood Chain RPC to read pause state live."}
+                Status infrastructure for Stock Tokens on Robinhood Chain. Not a trading dashboard.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Black ticker band, where grove puts its partner logos. */}
-      <section className="bg-cream pb-12 pt-16 md:pb-16 md:pt-24">
-        <Reveal>
-          <p className="display mx-auto max-w-[680px] px-6 text-center text-[28px] md:text-[32px]">
-            Every tracked token, as it stands right now.
-          </p>
-        </Reveal>
-        <Reveal className="mt-12 md:mt-20">
-          <Marquee assets={assets} />
-        </Reveal>
-      </section>
-
       {/* Use cases: three hairlined columns with italic numbering. */}
-      <section id="use-cases"  className="scroll-mt-24 py-16 md:py-24">
+      <section id="use-cases" className="scroll-mt-24 py-16 md:py-24">
         <div className="wrap">
           <Reveal>
             <p className="eyebrow">Use cases</p>
@@ -277,57 +201,8 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Tracked list. */}
-      <section id="tracked"  className="scroll-mt-24 py-16 md:py-20">
-        <div className="wrap">
-          <Reveal>
-            <p className="eyebrow">Robinhood Chain</p>
-            <div className="flex flex-wrap items-baseline justify-between gap-4">
-              <h2 data-split className="display text-[36px] md:text-[60px]">Tracked Stock Tokens</h2>
-              <p className="body-sm text-ink-75">{assets.length} tokens · updated <RelativeTime iso={assets[0]?.last_updated ?? new Date().toISOString()} /></p>
-            </div>
-          </Reveal>
-          <Reveal>
-            <ul data-stagger className="mt-8 divide-y divide-hairline border-y border-hairline">
-              {assets.map((a) => (
-                <li key={a.asset}>
-                  <Link
-                    href={`/assets/${a.asset}`}
-                    className="row-link grid grid-cols-[auto_64px_1fr_auto] items-center gap-3 py-4 sm:grid-cols-[auto_96px_1fr_140px_160px] sm:gap-4 md:px-3"
-                  >
-                    <StatusDot tone={a.overall_status} />
-                    <span className="text-[17px] font-medium tracking-[0.45px]">{a.asset}</span>
-                    <span className="truncate text-ink-75">{a.name}</span>
-                    <span className="body-sm">{humanise(a.overall_status)}</span>
-                    <span className="body-sm hidden text-ink-50 sm:block">
-                      <RelativeTime iso={a.last_updated} />
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* API: tabbed feature card. */}
-      <section id="api"  className="scroll-mt-24 py-16 md:py-24">
-        <div className="wrap">
-          <Reveal>
-            <p className="eyebrow">Developer API</p>
-            <h2 data-split className="display text-[45px] md:text-[60px]">Query it before you interact</h2>
-            <p className="body-md mt-4 max-w-[52ch] text-ink-75">
-              Protocols, wallets and applications can ask the same question this page answers. Send{" "}
-              <code className="text-ink">Accept: application/json</code> to any asset path, or use the{" "}
-              <code className="text-ink">/api</code> prefix. Live responses below are for {sample?.name ?? "a tracked token"}.
-            </p>
-          </Reveal>
-          <Reveal className="mt-10">{sample && <ApiTabs examples={examplesFor(sample)} />}</Reveal>
-        </div>
-      </section>
-
       {/* Verification: ecosystem-style grid. */}
-      <section id="verification"  className="scroll-mt-24 pb-32 pt-16 md:pb-40 md:pt-24">
+      <section id="verification" className="scroll-mt-24 py-16 md:py-24">
         <div className="wrap">
           <Reveal>
             <p className="eyebrow">Verification</p>
@@ -341,6 +216,41 @@ export default async function Home() {
           </Reveal>
           <Reveal className="mt-10">
             <StatusGrid items={explainers} />
+          </Reveal>
+        </div>
+      </section>
+
+      {/* API: what exists, with the live console living in the app. */}
+      <section id="api" className="scroll-mt-24 pb-32 pt-16 md:pb-40 md:pt-24">
+        <div className="wrap">
+          <Reveal>
+            <p className="eyebrow">Developer API</p>
+            <div className="grid gap-6 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:items-end">
+              <h2 data-split className="display text-[45px] md:text-[60px]">Query it before you interact</h2>
+              <p className="body-md max-w-[48ch] text-ink-75">
+                Protocols, wallets and applications can ask the same question the app answers. Send{" "}
+                <code className="text-ink">Accept: application/json</code> to any asset path, or use the{" "}
+                <code className="text-ink">/api</code> prefix.
+              </p>
+            </div>
+          </Reveal>
+          <Reveal className="mt-10">
+            <ul className="divide-y divide-hairline border-y border-hairline">
+              {ENDPOINTS.map((e) => (
+                <li key={e.path} className="grid gap-1 py-4 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-6 md:px-3">
+                  <code className="font-mono text-[14px] text-ink">{e.path}</code>
+                  <span className="body-sm text-ink-75">{e.what}</span>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+          <Reveal className="mt-10 flex flex-wrap items-center gap-4">
+            <Link href="/app#api" className="btn btn-primary">
+              Try it live
+            </Link>
+            <Link href="/api/assets" className="btn btn-ghost">
+              All tokens, JSON
+            </Link>
           </Reveal>
         </div>
       </section>

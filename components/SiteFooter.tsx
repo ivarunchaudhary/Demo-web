@@ -36,7 +36,8 @@ export function SiteFooter() {
           <div className="body-sm">
             <p className="display-italic text-[18px] tracking-[-0.6px]">Product —</p>
             <ul className="mt-4 space-y-3 text-ink">
-              <li><Link href="/#tracked" className="transition-colors hover:text-ink-75">Tracked tokens</Link></li>
+              <li><Link href="/app" className="transition-colors hover:text-ink-75">Check a token</Link></li>
+              <li><Link href="/app#tracked" className="transition-colors hover:text-ink-75">Tracked tokens</Link></li>
               <li><Link href="/#verification" className="transition-colors hover:text-ink-75">What a status means</Link></li>
               <li><Link href="/#use-cases" className="transition-colors hover:text-ink-75">Who asks</Link></li>
             </ul>
@@ -45,6 +46,7 @@ export function SiteFooter() {
             <p className="display-italic text-[18px] tracking-[-0.6px]">Developers —</p>
             <ul className="mt-4 space-y-3 text-ink">
               <li><Link href="/#api" className="transition-colors hover:text-ink-75">API reference</Link></li>
+              <li><Link href="/app#api" className="transition-colors hover:text-ink-75">Live responses</Link></li>
               <li><Link href="/api/assets" className="transition-colors hover:text-ink-75">All tokens, JSON</Link></li>
               <li><Link href="/api/assets/AAPL/status" className="transition-colors hover:text-ink-75">Example response</Link></li>
             </ul>

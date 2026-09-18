@@ -46,8 +46,8 @@ export function SiteHeader() {
       <nav className="wrap relative flex h-[88px] items-center justify-between">
         <Wordmark />
         <div className="flex items-center gap-4 md:gap-8">
-          <Link href="/#tracked" className="link-nav hidden md:block">
-            Tracked tokens
+          <Link href="/#use-cases" className="link-nav hidden md:block">
+            Use cases
           </Link>
           <Link href="/#verification" className="link-nav hidden md:block">
             Statuses
@@ -58,11 +58,8 @@ export function SiteHeader() {
           <Link href="/api/assets" className="btn btn-secondary btn-sm hidden sm:inline-flex">
             Launch data
           </Link>
-          <Link href="/#tracked" className="btn btn-primary btn-sm hidden sm:inline-flex">
+          <Link href="/app" className="btn btn-primary btn-sm">
             Check a token
-          </Link>
-          <Link href="/#api" className="btn btn-primary btn-sm sm:hidden">
-            API
           </Link>
         </div>
       </nav>
