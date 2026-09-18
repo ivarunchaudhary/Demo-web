@@ -1,26 +1,139 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --charcoal: #101010;
+  --charcoal-2: #161616;
+  --ivory: #fff9e4;
+  --ivory-75: rgba(255, 249, 228, 0.75);
+  --ivory-50: rgba(255, 249, 228, 0.5);
+  --ivory-16: rgba(255, 249, 228, 0.16);
+  --ivory-08: rgba(255, 249, 228, 0.08);
+  --yellow: #e3d27a;
+  --moss: #3e4941;
+  --deep-forest: #222d24;
+  --mist: #86bdbf;
+  --sage: #98b49a;
+  --sand: #c3b7a1;
+  --green: #99e79d;
+  --orange: #f15c3b;
+  --grey: #909590;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-charcoal: var(--charcoal);
+  --color-charcoal-2: var(--charcoal-2);
+  --color-ivory: var(--ivory);
+  --color-ivory-75: var(--ivory-75);
+  --color-ivory-50: var(--ivory-50);
+  --color-ivory-16: var(--ivory-16);
+  --color-ivory-08: var(--ivory-08);
+  --color-yellow: var(--yellow);
+  --color-moss: var(--moss);
+  --color-deep-forest: var(--deep-forest);
+  --color-mist: var(--mist);
+  --color-sage: var(--sage);
+  --color-sand: var(--sand);
+  --color-green: var(--green);
+  --color-orange: var(--orange);
+  --color-grey: var(--grey);
+  --font-sans: var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-instrument-serif), ui-serif, Georgia, serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  color-scheme: dark;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--charcoal);
+  color: var(--ivory);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--yellow);
+  color: var(--charcoal);
+}
+
+:focus-visible {
+  outline: 2px solid var(--yellow);
+  outline-offset: 3px;
+}
+
+/* Status tones: one class per overall status drives dot, text and rule colour. */
+.tone-ACTIVE { --tone: var(--green); }
+.tone-WARNING { --tone: var(--yellow); }
+.tone-BLOCKED { --tone: var(--orange); }
+.tone-UNKNOWN { --tone: var(--grey); }
+
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--tone);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--tone) 22%, transparent);
+  flex: none;
+}
+
+.dot-live {
+  animation: pulse 2.4s ease-in-out infinite;
+}
+
+.dot-lg {
+  width: 18px;
+  height: 18px;
+}
+@media (min-width: 768px) {
+  .dot-lg { width: 26px; height: 26px; }
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 3px color-mix(in srgb, var(--tone) 22%, transparent); }
+  50% { box-shadow: 0 0 0 7px color-mix(in srgb, var(--tone) 8%, transparent); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot-live { animation: none; }
+  * { transition-duration: 0.01ms !important; }
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 20px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+}
+.btn-primary { background: var(--yellow); color: var(--charcoal); }
+.btn-primary:hover { background: #ecdd8f; }
+.btn-secondary { background: var(--moss); color: var(--ivory); }
+.btn-secondary:hover { background: #4b5850; }
+.btn-ghost { border: 1px solid var(--ivory-16); color: var(--ivory); background: transparent; }
+.btn-ghost:hover { border-color: var(--ivory-50); }
+
+.hairline { border-color: var(--ivory-16); }
+
+.card {
+  border: 1px solid var(--ivory-16);
+  border-radius: 4px;
+  background: var(--charcoal);
+}
+
+.display {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
 }
