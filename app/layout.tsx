@@ -3,6 +3,8 @@ import { Inter, Newsreader, Geist_Mono } from "next/font/google";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { MotionRoot } from "@/components/motion/MotionRoot";
+import { SmoothScroll } from "@/components/motion/SmoothScroll";
+import "lenis/dist/lenis.css";
 import "./globals.css";
 
 /*
@@ -44,10 +46,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${sans.variable} ${serif.variable} ${mono.variable} h-full`}>
-      <body className="flex min-h-full flex-col overflow-x-hidden">
+      <body className="flex min-h-dvh flex-col overflow-x-hidden">
         <noscript>
           <style>{`.reveal,[data-hero-item],[data-hero-art],[data-split]{opacity:1!important;transform:none!important}.petal{display:none}`}</style>
         </noscript>
+        <SmoothScroll />
         <MotionRoot />
         <SiteHeader />
         <main className="relative z-10 flex flex-1 flex-col pt-[88px]">{children}</main>

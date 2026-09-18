@@ -98,7 +98,7 @@ export function MotionRoot() {
           });
         });
 
-        // Parallax layers drift against the scroll, scrubbed with a little lag.
+        // Parallax layers drift against the scroll. Lenis eases the scroll itself, so the scrub is direct.
         gsap.utils.toArray<HTMLElement>("[data-parallax]").forEach((el) => {
           const factor = parseFloat(el.dataset.parallax ?? "0.5");
           const scope = el.closest<HTMLElement>("[data-parallax-scope]") ?? el.parentElement!;
@@ -113,7 +113,7 @@ export function MotionRoot() {
                 trigger: scope,
                 start: fromBelow ? "top bottom" : "top top",
                 end: fromBelow ? "bottom bottom" : "bottom top",
-                scrub: 0.9,
+                scrub: true,
                 invalidateOnRefresh: true,
               },
             },
@@ -128,7 +128,7 @@ export function MotionRoot() {
             rotate: amount,
             scale: 1.06,
             ease: "none",
-            scrollTrigger: { trigger: scope, start: "top top", end: "bottom top", scrub: 1.2 },
+            scrollTrigger: { trigger: scope, start: "top top", end: "bottom top", scrub: true },
           });
         });
 
@@ -140,25 +140,27 @@ export function MotionRoot() {
           gsap.fromTo(
             el,
             { "--dy": `${amount}px` },
-            { "--dy": `${-amount}px`, ease: "none", scrollTrigger: { trigger: el.parentElement, start: "top bottom", end: "bottom top", scrub: 0.8 } },
+            { "--dy": `${-amount}px`, ease: "none", scrollTrigger: { trigger: el.parentElement, start: "top bottom", end: "bottom top", scrub: true } },
           );
         });
 
         // Ticker: a steady loop that speeds up and leans with the scroll, then settles.
+        // Lenis already eases the scroll, so the response here is deliberately
+        // gentle: a small speed range and a slow, long-tailed return to rest.
         const settles: (() => void)[] = [];
         gsap.utils.toArray<HTMLElement>("[data-marquee]").forEach((track) => {
           track.style.animation = "none"; // the CSS loop is only the no-JS fallback
-          const loop = gsap.to(track, { xPercent: -50, duration: 45, ease: "none", repeat: -1 });
-          const speed = gsap.quickTo(loop, "timeScale", { duration: 0.6, ease: "power2.out" });
-          const lean = gsap.quickTo(track, "skewX", { duration: 0.5, ease: "power2.out" });
+          const loop = gsap.to(track, { xPercent: -50, duration: 48, ease: "none", repeat: -1, force3D: true });
+          const speed = gsap.quickTo(loop, "timeScale", { duration: 1.1, ease: "power3.out" });
+          const lean = gsap.quickTo(track, "skewX", { duration: 1.1, ease: "power3.out" });
           ScrollTrigger.create({
             trigger: track,
             start: "top bottom",
             end: "bottom top",
             onUpdate: (self) => {
-              const v = gsap.utils.clamp(-8, 8, self.getVelocity() / 240);
+              const v = gsap.utils.clamp(-3, 3, self.getVelocity() / 600);
               speed(1 + Math.abs(v));
-              lean(-v * 0.8);
+              lean(-v * 1.2);
             },
           });
           const settle = () => {
