@@ -1,32 +1,71 @@
 @import "tailwindcss";
 
+/* ------------------------------------------------------------------ */
+/* Palette: the grove.finance token set.                               */
+/* ------------------------------------------------------------------ */
 :root {
-  --charcoal: #101010;
-  --charcoal-2: #161616;
+  --charcoal: #101010;        /* black-500: page ground */
+  --charcoal-2: #1a1e20;      /* grove "charcoal": raised surfaces, code */
+  --black-400: #2a2828;
+  --black-300: #4e4e4e;
+  --black-200: #909590;
+  --black-100: #bfc3bf;
+  --pure-black: #000;
+
   --ivory: #fff9e4;
+  --warm-white: #fffcf0;      /* body copy */
+  --cream: #faf5e6;
+  --ivory-80: rgba(255, 249, 228, 0.8);
   --ivory-75: rgba(255, 249, 228, 0.75);
+  --ivory-60: rgba(255, 249, 228, 0.6);
   --ivory-50: rgba(255, 249, 228, 0.5);
+  --ivory-40: rgba(255, 249, 228, 0.4);
+  --ivory-25: rgba(255, 249, 228, 0.25);
+  --ivory-20: rgba(255, 249, 228, 0.2);   /* hairline */
   --ivory-16: rgba(255, 249, 228, 0.16);
+  --ivory-12: rgba(255, 249, 228, 0.12);
+  --ivory-10: rgba(255, 249, 228, 0.1);
   --ivory-08: rgba(255, 249, 228, 0.08);
-  --yellow: #e3d27a;
-  --moss: #3e4941;
+  --ivory-05: rgba(255, 249, 228, 0.05);  /* row hover */
+
+  --yellow: #e3d27a;          /* accent */
+  --yellow-51: rgba(227, 210, 122, 0.51);
+  --moss: #3e4941;            /* panel surface */
   --deep-forest: #222d24;
   --mist: #86bdbf;
-  --sage: #98b49a;
+  --sage: #98b49a;            /* silver sage: focus ring, verified */
+  --sage-20: rgba(152, 180, 154, 0.2);
+  --sage-15: rgba(152, 180, 154, 0.15);
   --sand: #c3b7a1;
-  --green: #99e79d;
-  --orange: #f15c3b;
+  --green: #99e79d;           /* bridge green */
+  --orange: #f15c3b;          /* fire orange */
   --grey: #909590;
+
+  --hairline: var(--ivory-20);
 }
 
 @theme inline {
   --color-charcoal: var(--charcoal);
   --color-charcoal-2: var(--charcoal-2);
+  --color-black-400: var(--black-400);
+  --color-black-300: var(--black-300);
+  --color-black-200: var(--black-200);
+  --color-black-100: var(--black-100);
   --color-ivory: var(--ivory);
+  --color-warm-white: var(--warm-white);
+  --color-cream: var(--cream);
+  --color-ivory-80: var(--ivory-80);
   --color-ivory-75: var(--ivory-75);
+  --color-ivory-60: var(--ivory-60);
   --color-ivory-50: var(--ivory-50);
+  --color-ivory-40: var(--ivory-40);
+  --color-ivory-25: var(--ivory-25);
+  --color-ivory-20: var(--ivory-20);
   --color-ivory-16: var(--ivory-16);
+  --color-ivory-12: var(--ivory-12);
+  --color-ivory-10: var(--ivory-10);
   --color-ivory-08: var(--ivory-08);
+  --color-ivory-05: var(--ivory-05);
   --color-yellow: var(--yellow);
   --color-moss: var(--moss);
   --color-deep-forest: var(--deep-forest);
@@ -36,21 +75,33 @@
   --color-green: var(--green);
   --color-orange: var(--orange);
   --color-grey: var(--grey);
-  --font-sans: var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-instrument-serif), ui-serif, Georgia, serif;
+  --color-hairline: var(--hairline);
+
+  /*
+   * grove.finance sets Söhne (sans), GT Super Text (serif) and Söhne Mono.
+   * Those are licensed faces, so the licensed names come first (they win
+   * when installed or self-hosted) and the open faces loaded in
+   * app/layout.tsx stand in otherwise: Inter, Newsreader and Geist Mono.
+   */
+  --font-sans: "Söhne", "SohneText", var(--font-sans-face), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "GT Super Text", "GTSuperText", var(--font-serif-face), ui-serif, Georgia, serif;
+  --font-mono: "Söhne Mono", var(--font-mono-face), ui-monospace, "SF Mono", Menlo, monospace;
 }
 
+@layer components {
 html {
   color-scheme: dark;
 }
 
 body {
   background: var(--charcoal);
-  color: var(--ivory);
+  color: var(--warm-white);
   font-family: var(--font-sans);
   font-size: 16px;
   line-height: 1.5;
+  letter-spacing: 0.01em;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 ::selection {
@@ -59,11 +110,110 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid var(--yellow);
+  outline: 2px solid var(--sage);
   outline-offset: 3px;
 }
 
-/* Status tones: one class per overall status drives dot, text and rule colour. */
+code, pre, kbd {
+  font-family: var(--font-mono);
+}
+
+/* ------------------------------------------------------------------ */
+/* Type scale, mirrored from grove.finance's computed styles.           */
+/* ------------------------------------------------------------------ */
+
+/* Serif display: GT Super Text at weight 500, tightly tracked. */
+.display {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+  color: var(--ivory);
+}
+.display-lg { letter-spacing: -0.046em; line-height: 1.15; }
+
+/* Serif italic accents (card titles, footer headings, counters). */
+.display-italic {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--ivory);
+}
+
+/* Eyebrow: 10px, bold, 5px tracking, over a 31px line. */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 31px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--ivory-75);
+}
+
+/* Button / small label: 12px, bold, 2px tracking. */
+.label {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 31px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* Lead paragraph beside a display heading: 20px over 31px. */
+.lead {
+  font-size: 18px;
+  line-height: 1.55;
+  letter-spacing: 0.45px;
+  color: var(--ivory);
+}
+@media (min-width: 768px) {
+  .lead { font-size: 20px; line-height: 31px; }
+}
+
+/* Body: 16px over 32px, airy tracking. */
+.body-md {
+  font-size: 16px;
+  line-height: 32px;
+  letter-spacing: 0.45px;
+}
+
+/* Small body: 14px over 1.4. */
+.body-sm {
+  font-size: 14px;
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+
+/* Text link: yellow, underlined, three-quarter opacity until hovered. */
+.link {
+  color: var(--yellow);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  opacity: 0.75;
+  transition: opacity 150ms ease;
+}
+.link:hover { opacity: 1; }
+
+.link-nav {
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 31px;
+  letter-spacing: 0.45px;
+  color: var(--ivory);
+  transition: color 150ms ease;
+}
+.link-nav:hover { color: var(--ivory-75); }
+@media (min-width: 1280px) {
+  .link-nav { font-size: 20px; }
+}
+
+/* ------------------------------------------------------------------ */
+/* Status tones: one class per overall status drives dot, text, rule.   */
+/* ------------------------------------------------------------------ */
 .tone-ACTIVE { --tone: var(--green); }
 .tone-WARNING { --tone: var(--yellow); }
 .tone-BLOCKED { --tone: var(--orange); }
@@ -101,39 +251,463 @@ body {
   * { transition-duration: 0.01ms !important; }
 }
 
+/* ------------------------------------------------------------------ */
+/* Buttons: 44px tall, 8px radius, tracked-caps label.                  */
+/* ------------------------------------------------------------------ */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  height: 44px;
-  padding: 0 20px;
+  min-height: 44px;
+  padding: 6px 24px;
   border-radius: 8px;
+  border: 1px solid transparent;
+  font-family: var(--font-sans);
   font-size: 12px;
   font-weight: 700;
+  line-height: 31px;
   letter-spacing: 2px;
   text-transform: uppercase;
   white-space: nowrap;
   transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
 }
-.btn-primary { background: var(--yellow); color: var(--charcoal); }
-.btn-primary:hover { background: #ecdd8f; }
-.btn-secondary { background: var(--moss); color: var(--ivory); }
-.btn-secondary:hover { background: #4b5850; }
-.btn-ghost { border: 1px solid var(--ivory-16); color: var(--ivory); background: transparent; }
-.btn-ghost:hover { border-color: var(--ivory-50); }
+.btn-primary { background: var(--yellow); border-color: var(--yellow); color: var(--charcoal); }
+.btn-primary:hover { background: #ecdd8f; border-color: #ecdd8f; }
+.btn-secondary { background: var(--moss); border-color: var(--moss); color: var(--ivory); }
+.btn-secondary:hover { background: #4b5850; border-color: #4b5850; }
+.btn-ghost { background: rgba(0, 0, 0, 0.6); border-color: var(--ivory); color: var(--ivory); }
+.btn-ghost:hover { background: var(--ivory-10); }
+.btn-sm { min-height: 36px; padding: 2px 16px; }
 
-.hairline { border-color: var(--ivory-16); }
+/* Underlined text button, as grove's "About us". */
+.btn-underline {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--yellow);
+  color: var(--ivory);
+  transition: color 150ms ease, border-color 150ms ease;
+}
+.btn-underline:hover { color: var(--yellow); }
+
+.hairline { border-color: var(--hairline); }
 
 .card {
-  border: 1px solid var(--ivory-16);
+  border: 1px solid var(--hairline);
   border-radius: 4px;
   background: var(--charcoal);
 }
 
-.display {
+/* Category pill, as grove's article tags. */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--ivory-25);
+  border-radius: 999px;
+  background: rgba(16, 16, 16, 0.22);
+  padding: 4px 12px;
   font-family: var(--font-serif);
-  font-weight: 400;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--ivory);
+}
+
+/* ---------- Layout helpers ---------- */
+.wrap {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 1336px;
+  padding-inline: 24px;
+}
+@media (min-width: 768px) {
+  .wrap { padding-inline: 40px; }
+}
+
+/* ---------- Motion ---------- */
+
+/* Gradient veil laid over the botanical layer: dark at the top and bottom, translucent in the middle. */
+.veil {
+  background: linear-gradient(
+    180deg,
+    var(--charcoal) 0%,
+    color-mix(in srgb, var(--charcoal) 30%, transparent) 42%,
+    color-mix(in srgb, var(--charcoal) 30%, transparent) 58%,
+    var(--charcoal) 100%
+  );
+}
+
+/* Ambient drift on the illustrations so the background moves even before you scroll. */
+@keyframes sway {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50% { transform: translate3d(8px, -10px, 0) rotate(0.7deg); }
+}
+.sway { animation: sway 18s ease-in-out infinite; transform-origin: 50% 100%; }
+.sway-slow { animation: sway 26s ease-in-out -9s infinite; transform-origin: 100% 0%; }
+
+/* Entrances are run by GSAP (components/motion/MotionRoot.tsx); CSS only sets the hidden start state. */
+.reveal, [data-hero-item], [data-hero-art] { opacity: 0; }
+
+/* Ticker marquee. */
+@keyframes marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+.marquee-track { animation: marquee 40s linear infinite; }
+.marquee-mask {
+  mask-image: linear-gradient(to right, transparent 0, #000 120px, #000 calc(100% - 120px), transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 120px, #000 calc(100% - 120px), transparent 100%);
+}
+
+/* Tab panel entrance. */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+.tab-panel { animation: fade-in 500ms cubic-bezier(0.25, 1, 0.5, 1) both; }
+
+/* Hover-expanding status cards. */
+.status-grid { grid-template-columns: minmax(0, 1fr); }
+.status-group { grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 768px) {
+  .status-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .status-grid[data-active="0"] { grid-template-columns: 2fr 1fr 1fr 1fr; }
+  .status-grid[data-active="1"] { grid-template-columns: 1fr 2fr 1fr 1fr; }
+  .status-grid[data-active="2"] { grid-template-columns: 1fr 1fr 2fr 1fr; }
+  .status-grid[data-active="3"] { grid-template-columns: 1fr 1fr 1fr 2fr; }
+  .status-group { grid-template-columns: minmax(0, 1fr) minmax(0, 0fr); }
+  .status-group[data-open="true"] { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .status-panel { opacity: 0; transition: opacity 300ms ease 80ms; }
+  .status-group[data-open="true"] .status-panel { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sway, .sway-slow, .marquee-track, .tab-panel { animation: none; }
+  .reveal, [data-hero-item], [data-hero-art] { opacity: 1; transform: none; }
+  .status-grid, .status-group, .status-panel { transition: none; }
+}
+
+
+/* ------------------------------------------------------------------ */
+/* Section furniture lifted from grove.finance's home page.            */
+/* ------------------------------------------------------------------ */
+
+/* Hero stat box: stacked figures separated by hairlines, as grove's TVL block. */
+.stat-box {
+  border: 1px solid var(--ivory-40);
+  background: rgba(16, 16, 16, 0.55);
+  backdrop-filter: blur(6px);
+}
+.stat-box > * + * { border-top: 1px solid var(--ivory-25); }
+.stat-figure {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 56px;
+  line-height: 1;
   letter-spacing: -0.03em;
-  line-height: 1.02;
+  color: var(--ivory);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.stat-label {
+  margin-top: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--ivory-75);
+}
+
+/* Mist call-to-action card, as grove's "Stake your GROVE". */
+.cta-mist {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  border-radius: 4px;
+  background: var(--mist);
+  color: var(--charcoal);
+  padding: 28px 24px;
+  transition: background-color 200ms ease, transform 300ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+.cta-mist:hover { background: #95c9cb; transform: translateY(-2px); }
+.cta-mist .arrow {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1.5px solid var(--charcoal);
+  border-radius: 999px;
+  flex: none;
+  transition: transform 300ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+.cta-mist:hover .arrow { transform: translateX(4px); }
+
+/* Three-column use-case row: hairline on the left of each column. */
+.usecase { border-left: 1px solid var(--ivory-25); padding-left: 24px; }
+.usecase-number {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+  color: var(--ivory);
+}
+.usecase-title {
+  margin-top: 28px;
+  font-size: 22px;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--ivory);
+}
+.usecase ul { margin-top: 20px; }
+.usecase li { display: flex; gap: 12px; font-size: 14px; line-height: 1.45; color: var(--ivory-80); }
+.usecase li + li { margin-top: 12px; }
+.usecase li::before {
+  content: "";
+  flex: none;
+  width: 8px;
+  height: 8px;
+  margin-top: 6px;
+  border-radius: 999px;
+  background: var(--sage);
+}
+
+/* Tabbed feature card, as grove's "Enter the Grove". */
+.tabstrip {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  border-bottom: 1px solid var(--hairline);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tabstrip::-webkit-scrollbar { display: none; }
+.tabstrip button:first-child { margin-left: auto; }
+.tabstrip button:last-of-type { margin-right: auto; }
+.tabstrip button {
+  padding: 8px 4px 14px;
+  font-size: 14px;
+  letter-spacing: 0.45px;
+  color: var(--ivory-60);
+  white-space: nowrap;
+  transition: color 200ms ease;
+}
+.tabstrip button[aria-selected="true"], .tabstrip button:hover { color: var(--ivory); }
+.tab-indicator {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  height: 2px;
+  width: 0;
+  background: var(--yellow);
+}
+.feature-card {
+  display: grid;
+  gap: 32px;
+  border: 1px solid var(--ivory-25);
+  border-radius: 8px;
+  background: #0b0b0b;
+  padding: 32px 24px;
+  overflow: hidden;
+}
+@media (min-width: 1024px) {
+  .feature-card { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); padding: 48px; align-items: center; }
+}
+.code-panel {
+  border: 1px solid var(--hairline);
+  border-radius: 6px;
+  background: var(--charcoal-2);
+  padding: 20px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ivory-75);
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 440px;
+  overflow: auto;
+}
+
+/* Ecosystem-style grid: an illustrated tile beside a moss panel. */
+
+/* The row's whole hover state is this one number, tweened by GSAP in EcoRow.
+   Registering it gives it a typed initial value and a CSS-only fallback tween
+   for the no-JS case. */
+@property --p {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+.eco-row {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 768px) {
+  /* Columns are fixed. Animating grid tracks relaid out the panel's copy on
+     every frame, which is what made the reveal stutter; the sense of the tile
+     opening up is carried by transforms instead. */
+  .eco-row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .eco-row[data-flip="true"] .eco-tile { order: 2; }
+  /* Fallback only: GSAP sets --p inline, and inline wins over this. */
+  .eco-row:hover, .eco-row:focus-within { --p: 1; transition: --p 700ms cubic-bezier(0.32, 0.72, 0, 1); }
+}
+.eco-tile {
+  position: relative;
+  min-height: 280px;
+  overflow: hidden;
+  contain: paint;
+  border-radius: 4px;
+  border: 1px solid var(--ivory-16);
+  background: #000;
+}
+.eco-tile img {
+  position: absolute;
+  top: -30%;
+  right: -12%;
+  height: 175%;
+  width: auto;
+  max-width: none;
+  opacity: 0.95;
+  will-change: transform;
+  transform: translate3d(calc(var(--p) * -22%), 0, 0) scale(calc(1 + var(--p) * 0.06))
+    rotate(calc(var(--p) * -2deg));
+}
+.eco-row[data-flip="true"] .eco-tile img {
+  transform: translate3d(calc(var(--p) * -30%), 0, 0) scale(calc(1 + var(--p) * 0.06))
+    rotate(calc(var(--p) * 2deg));
+}
+
+/* The readout that the sliding illustration uncovers. */
+.eco-reveal {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  width: min(58%, 320px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 24px;
+  border-left: 1px solid var(--ivory-16);
+  /* A painted scrim, not a backdrop-filter: a blur that moves has to re-sample
+     and re-blur what is behind it on every frame, which no easing can hide. */
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.82), rgba(0, 0, 0, 0.93) 38%);
+  will-change: transform;
+  transform: translate3d(calc((1 - var(--p)) * 104%), 0, 0);
+}
+.eco-reveal-kicker {
+  font-size: 12px;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  color: var(--ivory-60);
+  opacity: clamp(0, calc(var(--p) * 4 - 0.2), 1);
+}
+.eco-reveal-signals { display: grid; gap: 9px; }
+.eco-reveal-signals li {
+  display: grid;
+  grid-template-columns: 10px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  line-height: 1.3;
+  /* --d is where this row starts; it reads the same number going both ways, so
+     the stagger unwinds on the way out instead of dropping out all at once. */
+  opacity: clamp(0, calc((var(--p) - var(--d, 0)) * 3.6), 1);
+  transform: translate3d(clamp(0px, calc((1 - (var(--p) - var(--d, 0)) * 3.6) * 14px), 14px), 0, 0);
+}
+.eco-reveal-label { color: var(--ivory-80); }
+.eco-reveal-value { color: var(--tone); font-family: var(--font-mono); font-size: 12px; }
+.eco-reveal-empty { font-size: 13px; line-height: 1.4; color: var(--ivory-60); }
+.eco-reveal-advice {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 18px;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--ivory);
+  opacity: clamp(0, calc((var(--p) - 0.5) * 3), 1);
+  transform: translate3d(0, clamp(0px, calc((1 - (var(--p) - 0.5) * 3) * 10px), 10px), 0);
+}
+@media (max-width: 767px) {
+  /* No hover on phones: the readout sits beneath the word as a static strip. */
+  .eco-row { --p: 1; }
+  .eco-tile { min-height: 0; }
+  .eco-tile-word { top: 52px; bottom: auto; font-size: 34px; }
+  .eco-tile img { transform: none; will-change: auto; }
+  .eco-reveal {
+    position: relative;
+    width: auto;
+    transform: none;
+    will-change: auto;
+    margin-top: 128px;
+    border-left: 0;
+    border-top: 1px solid var(--ivory-16);
+  }
+  .eco-reveal-signals li, .eco-reveal-advice { transform: none; }
+}
+.eco-tile::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(0deg, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0) 45%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 55%);
+}
+.eco-tile-word {
+  position: absolute;
+  left: 24px;
+  bottom: 24px;
+  z-index: 1;
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-style: italic;
+  font-size: 40px;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--tone);
+}
+.eco-tile-dot { position: absolute; left: 24px; top: 24px; z-index: 1; }
+.eco-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 32px;
+  border-radius: 4px;
+  background: var(--moss);
+  padding: 28px 24px;
+  min-height: 280px;
+}
+@media (min-width: 1024px) { .eco-panel { padding: 40px; } }
+.eco-panel h3 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-style: italic;
+  font-size: 32px;
+  letter-spacing: -1px;
+  line-height: 35px;
+  color: var(--ivory);
+}
+.eco-panel p { font-size: 15px; line-height: 1.5; color: var(--ivory); }
+.eco-panel li { display: flex; gap: 10px; font-size: 14px; line-height: 1.45; color: var(--ivory-80); }
+.eco-panel li + li { margin-top: 8px; }
+.eco-panel li::before { content: ""; flex: none; width: 6px; height: 6px; margin-top: 7px; border-radius: 999px; background: var(--ivory-60); }
+
+/* Row-list hover, as grove's table rows. */
+.row-link { transition: background-color 200ms ease, padding-left 300ms cubic-bezier(0.25, 1, 0.5, 1); }
+.row-link:hover { background: var(--ivory-05); }
+@media (min-width: 768px) { .row-link:hover { padding-left: 20px; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-mist, .cta-mist .arrow, .row-link { transition: none; }
+  /* EcoRow never starts its tween under reduced motion, so the CSS fallback
+     takes over and hover snaps the readout open with no animation. */
+  .eco-row, .eco-row:hover, .eco-row:focus-within { transition: none; }
+}
 }
