@@ -2,8 +2,8 @@ import Link from "next/link";
 
 export function Wordmark() {
   return (
-    <Link href="/" className="display text-[26px] leading-none tracking-[-0.03em]" aria-label="AssetStatus home">
-      AssetStatus
+    <Link href="/" className="display text-[26px] leading-none tracking-[-0.03em]" aria-label="Feels home">
+      Feels
     </Link>
   );
 }

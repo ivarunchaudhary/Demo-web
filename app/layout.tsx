@@ -36,8 +36,8 @@ const mono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "AssetStatus — Live operational status for Stock Tokens",
-    template: "%s — AssetStatus",
+    default: "Feels — Live operational status for Stock Tokens",
+    template: "%s — Feels",
   },
   description:
     "Know the state of your Stock Token before you use it. One standardized status layer built from verifiable onchain and authoritative offchain information.",

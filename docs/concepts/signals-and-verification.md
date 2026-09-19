@@ -1,6 +1,6 @@
 # Signals, sources and verification
 
-A status with no provenance is an opinion. Every value AssetStatus publishes is wrapped in a `Signal`, which says where the value came from, when it was observed, and how far it was actually verified.
+A status with no provenance is an opinion. Every value Feels publishes is wrapped in a `Signal`, which says where the value came from, when it was observed, and how far it was actually verified.
 
 ## The Signal envelope
 

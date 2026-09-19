@@ -2,11 +2,11 @@
 description: Live operational status for Stock Tokens on Robinhood Chain.
 ---
 
-# AssetStatus
+# Feels
 
 Before interacting with a tokenized stock, there is one question worth answering: **what is its current operational state?**
 
-A Stock Token can be paused at the contract level, restricted for some holders, priced by a stale oracle, or tied to an underlying security that is halted or delisted. None of that is visible from a balance or a price chart. AssetStatus answers that single question, for each tracked token, with a source and a timestamp attached to every claim.
+A Stock Token can be paused at the contract level, restricted for some holders, priced by a stale oracle, or tied to an underlying security that is halted or delisted. None of that is visible from a balance or a price chart. Feels answers that single question, for each tracked token, with a source and a timestamp attached to every claim.
 
 ## What it is
 
@@ -15,7 +15,7 @@ A Stock Token can be paused at the contract level, restricted for some holders, 
 
 ## What it is not
 
-No prices, charts, portfolios, trading, screening or recommendations. AssetStatus is status infrastructure, deliberately narrow.
+No prices, charts, portfolios, trading, screening or recommendations. Feels is status infrastructure, deliberately narrow.
 
 ## The shape of an answer
 

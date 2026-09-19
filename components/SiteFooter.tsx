@@ -61,7 +61,7 @@ export function SiteFooter() {
           </div>
         </div>
         <p className="mt-12 text-[12px] leading-[1.4] text-ink">
-          {new Date().getFullYear()} AssetStatus. Statuses describe operational state and are not a recommendation to buy, sell or hold any asset.
+          {new Date().getFullYear()} Feels. Statuses describe operational state and are not a recommendation to buy, sell or hold any asset.
         </p>
       </div>
     </footer>

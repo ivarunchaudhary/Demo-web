@@ -1,6 +1,6 @@
 # Table of contents
 
-* [AssetStatus](README.md)
+* [Feels](README.md)
 
 ## Getting started
 

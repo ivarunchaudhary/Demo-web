@@ -115,7 +115,7 @@ export default async function Home() {
                 Know the state of your Stock Token before you use it.
               </h1>
               <p data-hero-item className="lead mt-8 max-w-[42ch]">
-                AssetStatus is the live operational-status layer for tokenized stocks on Robinhood Chain. One answer,
+                Feels is the live operational-status layer for tokenized stocks on Robinhood Chain. One answer,
                 built from verifiable onchain state and authoritative issuer information.
               </p>
 

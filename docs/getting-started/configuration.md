@@ -1,6 +1,6 @@
 # Configuration
 
-AssetStatus runs with no configuration at all. One optional variable switches the token signal from recorded data to a live onchain read.
+Feels runs with no configuration at all. One optional variable switches the token signal from recorded data to a live onchain read.
 
 ## Environment variables
 

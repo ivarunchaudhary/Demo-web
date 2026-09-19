@@ -88,7 +88,7 @@ function examplesFor(a: AssetStatusResponse): ApiExample[] {
     {
       id: "full",
       label: "Full record",
-      title: "Everything AssetStatus knows about the token",
+      title: "Everything Feels knows about the token",
       blurb: "The complete record: every signal, its verification state, its source and its observation time.",
       path: base,
       body: j(a),
