@@ -106,7 +106,9 @@ export default async function Home() {
           <div aria-hidden className="pointer-events-none absolute inset-y-0 left-6 w-px bg-ink-40 md:left-10" />
           <div aria-hidden className="pointer-events-none absolute inset-y-0 right-[400px] hidden w-px bg-ink-40 lg:block" />
           <div data-hero-item className="pointer-events-none absolute right-10 top-24 hidden lg:block">
-            <Glyph />
+            {/* The botanical layer runs right under the mark, so it gets its own clear space. */}
+            <div aria-hidden className="absolute -inset-12 rounded-full bg-[radial-gradient(closest-side,var(--paper),color-mix(in_srgb,var(--paper)_60%,transparent)_55%,transparent)]" />
+            <Glyph className="relative" />
           </div>
 
           <div className="grid gap-16 pb-24 pt-10 md:pt-20 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-10">

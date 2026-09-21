@@ -44,7 +44,7 @@ export function SiteHeader() {
         className={`pointer-events-none absolute inset-x-0 top-0 h-[88px] border-b border-hairline bg-paper/85 backdrop-blur-[12px] transition-opacity duration-200 ${scrolled ? "opacity-100" : "opacity-0"}`}
       />
       <nav className="wrap relative flex h-[88px] items-center justify-between">
-        <Wordmark />
+        <Wordmark preload />
         <div className="flex items-center gap-4 md:gap-8">
           <Link href="/#use-cases" className="link-nav hidden md:block">
             Use cases

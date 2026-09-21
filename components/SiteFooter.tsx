@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Glyph, Wordmark } from "./Wordmark";
+import { Wordmark } from "./Wordmark";
 import { Parallax } from "./motion/Parallax";
 
 /**
@@ -27,8 +27,7 @@ export function SiteFooter() {
       <div className="wrap pb-12 pt-20">
         <div className="grid gap-10 border-t border-ink pt-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
-            <Glyph size={48} className="mb-6" />
-            <Wordmark />
+            <Wordmark height={36} />
             <p className="body-md mt-4 max-w-[36ch] text-ink">
               Live operational status for Stock Tokens. Status infrastructure, not a trading dashboard.
             </p>
